@@ -1,11 +1,12 @@
 package main
 
 import (
+	"database/sql"
 	"log"
 
-	db "github.com/Seemant-RajSingh/go-crud/DB"
 	"github.com/Seemant-RajSingh/go-crud/cmd/api"
 	"github.com/Seemant-RajSingh/go-crud/config"
+	db "github.com/Seemant-RajSingh/go-crud/db"
 	"github.com/go-sql-driver/mysql"
 )
 
@@ -24,8 +25,19 @@ func main() {
 		log.Fatal()
 	}
 
+	initStorage(db)
+
 	server := api.NewAPIServer(":8080", db)
 	if err := server.Run(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func initStorage(db *sql.DB) { // pointer to sql database
+	err := db.Ping()
+	if err != nil {
+		log.Fatal()
+	}
+
+	log.Println("DB: Succesfully connected")
 }
