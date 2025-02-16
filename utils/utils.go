@@ -11,7 +11,7 @@ import (
 var Validate = validator.New()
 
 func ParseJSON(r *http.Request, payload any) error {
-	if r.Body == nil {
+	if r.Body == nil { // r.Body is a stream (like a file). Once it’s read, it cannot be read again.
 		return fmt.Errorf("missing request body")
 	}
 	return json.NewDecoder(r.Body).Decode(payload)

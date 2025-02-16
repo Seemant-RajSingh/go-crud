@@ -7,7 +7,7 @@ import (
 	"github.com/Seemant-RajSingh/go-crud/types"
 )
 
-type Store struct {
+type Store struct { // implements type UserStore interface in types.go
 	db *sql.DB
 }
 

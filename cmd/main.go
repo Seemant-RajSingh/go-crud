@@ -13,7 +13,7 @@ import (
 func main() {
 
 	db, err := db.NewMySQLStorage(mysql.Config{
-		User:                 config.Envs.DBUser,
+		User:                 config.Envs.DBUser, // fields User, Passwd taken from dsn.go(lib) Config struct
 		Passwd:               config.Envs.DBPassword,
 		Addr:                 config.Envs.DBAddress,
 		DBName:               config.Envs.DBName,
@@ -27,14 +27,14 @@ func main() {
 
 	initStorage(db)
 
-	server := api.NewAPIServer(":8080", db)
+	server := api.NewAPIServer(":8080", db) // db is a pointer to sql.DB
 	if err := server.Run(); err != nil {
 		log.Fatal(err)
 	}
 }
 
 func initStorage(db *sql.DB) { // pointer to sql database
-	err := db.Ping()
+	err := db.Ping() // CONNECTING TO DB
 	if err != nil {
 		log.Fatal()
 	}

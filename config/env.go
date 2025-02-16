@@ -40,11 +40,12 @@ func getEnv(key, fallback string) string {
 		return value
 	}
 
-	return fallback // ?
+	return fallback
 }
 
 func getEnvAsInt(key string, fallback int64) int64 {
 	if value, ok := os.LookupEnv(key); ok {
+		// convert time from string to int64 (MUST STORE JWTExiration in string in .env)
 		i, err := strconv.ParseInt(value, 10, 64)
 		if err != nil {
 			return fallback
